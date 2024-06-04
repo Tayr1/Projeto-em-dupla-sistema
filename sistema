@@ -4,6 +4,13 @@
 
 using namespace std;
 
+struct Usuario {
+    string nome;
+    string senha;
+    string data_nascimento;
+    string email;
+};
+
 void exibir_mensagem_entrada() {
     cout << "Bem-vindo ao sistema!" << endl;
 }
@@ -12,59 +19,64 @@ void exibir_mensagem_saida() {
     cout << "Obrigado por usar o sistema. Até logo!" << endl;
 }
 
-void cadastrar_usuario(vector<string>& lista_usuarios) {
-    string nome, data_nascimento, animal_favorito;
-    cout << "Digite seu nome: ";
-    getline(cin, nome);
-    cout << "Digite sua data de nascimento (DD/MM/AAAA): ";
-    getline(cin, data_nascimento);
-    cout << "Digite seu animal favorito: "
-    getline(cin, animal_favorito);
-    string usuario = "Nome: " + nome + ", Data de Nascimento: " + data_nascimento + ", Animal Favorito: " + animal_favorito;
-    lista_usuarios.push_back(usuario);
+void cadastrar_usuario(vector<Usuario>& lista_usuarios) {
+    Usuario novo_usuario;
+    cout << "Digite o nome do usuário: ";
+    getline(cin, novo_usuario.nome);
+    cout << "Digite o email do usuário: ";
+    getline(cin, novo_usuario.email);
+    cout << "Digite a data de nascimento do usuário (DD/MM/AAAA): ";
+    getline(cin, novo_usuario.data_nascimento);
+    cout << "Digite a senha do usuário: ";
+    getline(cin, novo_usuario.senha);
+    lista_usuarios.push_back(novo_usuario);
 }
 
-void exibir_lista(const vector<string>& lista_usuarios) {
+void exibir_lista(const vector<Usuario>& lista_usuarios) {
     if (lista_usuarios.empty()) {
         cout << "A lista está vazia." << endl;
     } else {
         cout << "Lista de usuários:" << endl;
-        for (const string& usuario : lista_usuarios) {
-            cout << usuario << endl;
+        for (const Usuario& usuario : lista_usuarios) {
+            cout << "Nome: " << usuario.nome << ", Data de Nascimento: " << usuario.data_nascimento << ", Senha: " << usuario.senha << ", Email: " << usuario.email << endl;
         }
     }
 }
 
 int main() {
     exibir_mensagem_entrada();
-    vector<string> lista_usuarios;
+    vector<Usuario> lista_usuarios;
 
-    while (true) {
+    char opcao;
+    do {
         cout << "\nMENU:" << endl;
         cout << "1. Cadastrar usuário" << endl;
         cout << "2. Exibir lista de usuários" << endl;
         cout << "3. Sair do sistema" << endl;
-
-        int opcao;
         cout << "Escolha uma opção: ";
         cin >> opcao;
         cin.ignore(); // Limpar o buffer do teclado
 
         switch (opcao) {
-            case 1:
-                cadastrar_usuario(lista_usuarios);
+            case '1':
+                do {
+                    cadastrar_usuario(lista_usuarios);
+                    cout << "Deseja cadastrar outro usuário? (S/N): ";
+                    cin >> opcao;
+                    cin.ignore(); // Limpar o buffer do teclado
+                } while (opcao == 'S' || opcao == 's');
                 break;
-            case 2:
+            case '2':
                 exibir_lista(lista_usuarios);
                 break;
-            case 3:
+            case '3':
                 exibir_mensagem_saida();
                 return 0;
             default:
                 cout << "Opção inválida. Por favor, escolha uma opção válida." << endl;
                 break;
         }
-    }
+    } while (true);
 
     return 0;
 }
