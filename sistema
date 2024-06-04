@@ -55,7 +55,7 @@ int main() {
         cout << "3. Sair do sistema" << endl;
         cout << "Escolha uma opção: ";
         cin >> opcao;
-        cin.ignore(); // Limpar o buffer do teclado
+        cin.ignore(); 
 
         switch (opcao) {
             case '1':
@@ -63,7 +63,7 @@ int main() {
                     cadastrar_usuario(lista_usuarios);
                     cout << "Deseja cadastrar outro usuário? (S/N): ";
                     cin >> opcao;
-                    cin.ignore(); // Limpar o buffer do teclado
+                    cin.ignore(); 
                 } while (opcao == 'S' || opcao == 's');
                 break;
             case '2':
